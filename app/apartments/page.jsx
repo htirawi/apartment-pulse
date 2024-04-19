@@ -1,7 +1,10 @@
-import apartments from '@/apartments.json';
 import ApartmentCard from '@/components/ApartmentCard';
 
-const ApartmentsPage = () => {
+import { fetchApartments } from '@/utils/requests';
+
+const ApartmentsPage = async () => {
+  const apartments = await fetchApartments();
+  apartments.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">

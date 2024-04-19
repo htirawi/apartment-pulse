@@ -1,9 +1,11 @@
 import Link from 'next/link';
 
-import apartments from '@/apartments.json';
 import ApartmentCard from '@/components/ApartmentCard';
+import { fetchApartments } from '@/utils/requests';
 
-const HomeApartments = () => {
+const HomeApartments = async () => {
+  const apartments = await fetchApartments();
+
   const recentApartments = apartments
     .sort(() => Math.random() - Math.random())
     .slice(0, 3);
