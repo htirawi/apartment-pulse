@@ -1,11 +1,12 @@
-import Link from 'next/link';
+import Hero from '@/components/Hero';
+import InfoBoxes from '@/components/InfoBoxes';
 
 function HomePage() {
   return (
-    <div>
-      <h1 className="text-3xl">Welcome to the homepage!</h1>
-      <Link href="/apartments">View apartments</Link>
-    </div>
+    <>
+      <Hero />
+      <InfoBoxes />
+    </>
   );
 }
 
