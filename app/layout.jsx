@@ -1,5 +1,7 @@
 import '@/assets/styles/globals.css';
 
+import Navbar from '@/components/Navbar';
+
 export const metadata = {
   title: 'Apartment Rental | Find the best apartment for rent in your city',
   description: 'Find the best apartment for rent in your city',
@@ -11,7 +13,8 @@ const MainLayout = ({ children }) => {
     <html lang="en">
       <body>
         <div id="app">
-          <div>{children}</div>
+          <Navbar />
+          <main>{children}</main>
         </div>
       </body>
     </html>
