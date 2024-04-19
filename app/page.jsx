@@ -2,7 +2,7 @@ import Hero from '@/components/Hero';
 import InfoBoxes from '@/components/InfoBoxes';
 import HomeApartments from '@/components/HomeApartments';
 
-function HomePage() {
+const HomePage = () => {
   return (
     <>
       <Hero />
@@ -10,6 +10,6 @@ function HomePage() {
       <HomeApartments />
     </>
   );
-}
+};
 
 export default HomePage;

@@ -7,7 +7,7 @@ const override = {
   borderColor: '#38b2f6',
 };
 
-const loadingPage = ({ loading }) => {
+const Spinner = ({ loading }) => {
   return (
     <ClipLoader
       color="#38b2f6"
@@ -19,4 +19,4 @@ const loadingPage = ({ loading }) => {
   );
 };
 
-export default loadingPage;
+export default Spinner;
