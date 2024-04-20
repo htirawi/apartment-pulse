@@ -10,9 +10,11 @@
     "lint:fix": "next lint ./ --fix"
   },
   "dependencies": {
+    "cloudinary": "2.1.0",
     "mongodb": "6.5.0",
     "mongoose": "8.3.2",
     "next": "14.2.2",
+    "next-auth": "4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "5.1.0",
