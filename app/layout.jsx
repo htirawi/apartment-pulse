@@ -3,6 +3,8 @@ import '@/assets/styles/globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
+import AuthProvider from '@/components/AuthProvider';
+
 export const metadata = {
   title: 'Apartment Rental | Find the best apartment for rent in your city',
   description: 'Find the best apartment for rent in your city',
@@ -11,15 +13,17 @@ export const metadata = {
 
 const MainLayout = ({ children }) => {
   return (
-    <html lang="en">
-      <body>
-        <div id="app">
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body>
+          <div id="app">
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </AuthProvider>
   );
 };
 

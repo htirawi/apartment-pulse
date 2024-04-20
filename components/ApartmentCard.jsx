@@ -23,7 +23,7 @@ const ApartmentCard = ({ apartment }) => {
   return (
     <div className="rounded-xl shadow-md relative">
       <Image
-        src={`/images/apartments/${apartment.images[0]}`}
+        src={apartment.images[0]}
         alt=""
         sizes="100vw"
         height={0}

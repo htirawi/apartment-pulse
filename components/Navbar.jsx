@@ -1,8 +1,10 @@
 'use client';
 
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 import { FaGoogle } from 'react-icons/fa';
 
 import { useState } from 'react';
@@ -11,10 +13,23 @@ import logo from '@/assets/images/logo-white.png';
 import profileDefault from '@/assets/images/profile.png';
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isLogged, setIsLogged] = useState(true); // Replace with actual login state
+  const [providers, setProviders] = useState(false); // Replace with actual login state
   const pathname = usePathname();
+
+  const profileImage = session?.user?.image || profileDefault;
+
+  useEffect(() => {
+    const fetchProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+
+    fetchProviders();
+  }, []);
 
   return (
     <nav className="bg-blue-700 border-b border-blue-500">
@@ -77,7 +92,7 @@ const Navbar = () => {
                 >
                   Apartments
                 </Link>
-                {isLogged && (
+                {session && (
                   <Link
                     href="/apartments/add"
                     className={`${
@@ -92,19 +107,27 @@ const Navbar = () => {
           </div>
 
           {/* <!-- Right Side Menu (Logged Out) --> */}
-          {!isLogged && (
+          {!session && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                  <FaGoogle className="text-white mr-2" />
-                  <span>Login or Register</span>
-                </button>
+                {providers &&
+                  Object.values(providers).map((provider, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                      onClick={() => signIn(provider.id)}
+                    >
+                      <FaGoogle className="text-white mr-2" />
+                      <span>Login or Register</span>
+                    </button>
+                  ))}
               </div>
             </div>
           )}
 
           {/* <!-- Right Side Menu (Logged In) --> */}
-          {isLogged && (
+          {session && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="/messages" className="relative group">
                 <button
@@ -148,8 +171,11 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       className="h-8 w-8 rounded-full"
-                      src={profileDefault}
+                      src={profileImage}
                       alt=""
+                      width={40}
+                      height={40}
+                      sizes="100vw"
                     />
                   </button>
                 </div>
@@ -170,6 +196,7 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-0"
+                      onClick={() => setIsUserMenuOpen(false)}
                     >
                       Your Profile
                     </Link>
@@ -179,6 +206,7 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
+                      onClick={() => setIsUserMenuOpen(false)}
                     >
                       Saved apartments
                     </Link>
@@ -187,6 +215,10 @@ const Navbar = () => {
                       role="menuitem"
                       tabIndex="-1"
                       id="user-menu-item-2"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        signOut();
+                      }}
                     >
                       Sign Out
                     </button>
@@ -218,7 +250,7 @@ const Navbar = () => {
             >
               Apartments
             </Link>
-            {isLogged && (
+            {session && (
               <Link
                 href="/apartments/add"
                 className={`${
@@ -229,12 +261,19 @@ const Navbar = () => {
               </Link>
             )}
 
-            {!isLogged && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-                <FaGoogle className="text-white mr-2" />
-                <span>Login or Register</span>
-              </button>
-            )}
+            {!session &&
+              providers &&
+              Object.values(providers).map((provider, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                  onClick={() => signIn(provider.id)}
+                >
+                  <FaGoogle className="text-white mr-2" />
+                  <span>Login or Register</span>
+                </button>
+              ))}
           </div>
         </div>
       )}

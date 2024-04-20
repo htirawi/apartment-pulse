@@ -6,7 +6,9 @@ import { fetchApartment } from '@/utils/requests';
 import Link from 'next/link';
 
 import ApartmentHeaderImage from '@/components/ApartmentHeaderImage';
+import ApartmentImages from '@/components/ApartmentImages';
 import ApartmentDetails from '@/components/ApartmentDetails';
+
 import Spinner from '@/components/Spinner';
 
 import { FaArrowLeft } from 'react-icons/fa';
@@ -150,6 +152,7 @@ const ApartmentPage = () => {
               </div>
             </div>
           </section>
+          <ApartmentImages images={apartment.images} />
         </>
       )}
     </>

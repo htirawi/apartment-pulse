@@ -5,7 +5,9 @@ async function fetchApartments() {
   try {
     // handle if domain is not available
     if (!apiDomain) return [];
-    const response = await fetch(`${apiDomain}/apartments`);
+    const response = await fetch(`${apiDomain}/apartments`, {
+      cache: 'no-store',
+    });
     if (!response.ok) throw new Error('Failed to fetch apartments');
     return response.json();
   } catch (error) {
