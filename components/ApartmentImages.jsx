@@ -5,7 +5,7 @@ const ApartmentImages = ({ images }) => {
       <div className="container m-auto">
         {images.length === 1 ? (
           <Image
-            key={index}
+            key={'main-image'}
             src={images[0]}
             alt=""
             className="object-cover h-[400px] mx-auto rounded-xl"
