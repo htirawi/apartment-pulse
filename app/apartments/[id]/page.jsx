@@ -53,7 +53,7 @@ const ApartmentPage = () => {
       {loading && <Spinner loading={loading} />}
       {!loading && apartment && (
         <>
-          <ApartmentHeaderImage image={apartment.images[0]} />
+          <ApartmentHeaderImage image={apartment?.images[0]} />
           <section>
             <div className="container m-auto py-6 px-6">
               <Link

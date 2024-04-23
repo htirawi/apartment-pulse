@@ -17,15 +17,22 @@ const Navbar = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [providers, setProviders] = useState(false); // Replace with actual login state
+  const [providers, setProviders] = useState(false);
+  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
 
   const profileImage = session?.user?.image || profileDefault;
 
   useEffect(() => {
     const fetchProviders = async () => {
-      const res = await getProviders();
-      setProviders(res);
+      try {
+        const res = await getProviders();
+        setProviders(res);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchProviders();
@@ -110,7 +117,7 @@ const Navbar = () => {
           {!session && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                {providers &&
+                {providers && !loading ? (
                   Object.values(providers).map((provider, idx) => (
                     <button
                       key={idx}
@@ -121,7 +128,10 @@ const Navbar = () => {
                       <FaGoogle className="text-white mr-2" />
                       <span>Login or Register</span>
                     </button>
-                  ))}
+                  ))
+                ) : (
+                  <p>Loading...</p>
+                )}
               </div>
             </div>
           )}
@@ -261,19 +271,21 @@ const Navbar = () => {
               </Link>
             )}
 
-            {!session &&
-              providers &&
+            {!session && providers && !loading ? (
               Object.values(providers).map((provider, idx) => (
                 <button
                   key={idx}
                   type="button"
-                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
                   onClick={() => signIn(provider.id)}
                 >
                   <FaGoogle className="text-white mr-2" />
                   <span>Login or Register</span>
                 </button>
-              ))}
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </div>
       )}
