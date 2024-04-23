@@ -15,7 +15,7 @@ const InfoBoxes = () => {
                 backgroundColor: 'bg-black',
               }}
             >
-              Find your dream rental property. Bookmark apartments and contact
+              Find your dream rental apartment. Bookmark apartments and contact
               owners.
             </InfoBox>
 
@@ -23,7 +23,7 @@ const InfoBoxes = () => {
               heading="For Apartment Owners"
               backgroundColor="bg-blue-100"
               buttonInfo={{
-                text: 'Add Property',
+                text: 'Add Apartment',
                 link: '/apartments/add',
                 backgroundColor: 'bg-blue-500',
               }}
