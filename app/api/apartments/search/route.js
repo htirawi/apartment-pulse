@@ -1,6 +1,8 @@
 import connectDB from '@/config/database';
 import Apartment from '@/models/Apartment';
 
+export const dynamic = 'force-dynamic';
+
 export const GET = async (req) => {
   try {
     await connectDB();
