@@ -121,7 +121,7 @@ const ApartmentAddForm = () => {
             name="description"
             className="border rounded w-full py-2 px-3"
             rows="4"
-            placeholder="Add an optional description of your property"
+            placeholder="Add an optional description of your apartment"
             value={fields.description}
             onChange={handleChange}
           ></textarea>

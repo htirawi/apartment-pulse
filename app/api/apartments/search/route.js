@@ -3,11 +3,11 @@ import Apartment from '@/models/Apartment';
 
 export const dynamic = 'force-dynamic';
 
-export const GET = async (req) => {
+export const GET = async (request) => {
   try {
     await connectDB();
 
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(request.url);
 
     const location = searchParams.get('location');
     const apartmentType = searchParams.get('apartmentType');
