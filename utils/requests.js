@@ -1,13 +1,16 @@
 const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || null;
 
 // Fetch apartments from the API
-async function fetchApartments() {
+async function fetchApartments({ showFeatured = false } = {}) {
   try {
     // handle if domain is not available
     if (!apiDomain) return [];
-    const response = await fetch(`${apiDomain}/apartments`, {
-      cache: 'no-store',
-    });
+    const response = await fetch(
+      `${apiDomain}/apartments${showFeatured ? '/featured' : ''}`,
+      {
+        cache: 'no-store',
+      }
+    );
     if (!response.ok) throw new Error('Failed to fetch apartments');
     return response.json();
   } catch (error) {

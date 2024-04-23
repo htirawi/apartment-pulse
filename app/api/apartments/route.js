@@ -9,9 +9,22 @@ export const GET = async (req) => {
   try {
     await connectDB();
 
-    const apartments = await Apartment.find({});
+    const page = req.nextUrl.searchParams.get('page') || 1; // Default to page 1
+    const pageSize = req.nextUrl.searchParams.get('pageSize') || 5; // Default to 10 items per page
 
-    return new Response(JSON.stringify(apartments), {
+    const skip = (page - 1) * pageSize;
+    const totalApartments = await Apartment.countDocuments({});
+
+    const totalPages = Math.ceil(totalApartments / pageSize);
+
+    const apartments = await Apartment.find({}).skip(skip).limit(pageSize);
+
+    const result = {
+      apartments,
+      totalPages,
+    };
+
+    return new Response(JSON.stringify(result), {
       status: 200,
     });
   } catch (error) {

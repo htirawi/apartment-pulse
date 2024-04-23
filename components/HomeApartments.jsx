@@ -4,9 +4,9 @@ import ApartmentCard from '@/components/ApartmentCard';
 import { fetchApartments } from '@/utils/requests';
 
 const HomeApartments = async () => {
-  const apartments = await fetchApartments();
+  const data = await fetchApartments();
 
-  const recentApartments = apartments
+  const recentApartments = data.apartments
     .sort(() => Math.random() - Math.random())
     .slice(0, 3);
   return (
