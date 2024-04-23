@@ -60,7 +60,13 @@ const ApartmentMap = ({ apartment }) => {
       }
     };
     fetchCoords();
-  }, []);
+  }, [
+    apartment.location.city,
+    apartment.location.state,
+    apartment.location.street,
+    apartment.location.zipcode,
+    viewport,
+  ]);
 
   if (loading) return <Spinner loading={loading} />;
 
