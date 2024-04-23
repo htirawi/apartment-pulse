@@ -38,8 +38,6 @@ const SearchResultsPage = () => {
     fetchSearchResults();
   }, [location, apartmentType]);
 
-  console.log(apartments);
-
   return (
     <>
       <section className="bg-blue-700 py-4">
