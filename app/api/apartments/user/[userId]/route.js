@@ -2,6 +2,8 @@
 import connectDB from '@/config/database';
 import Apartment from '@/models/Apartment';
 
+export const dynamic = 'force-dynamic';
+
 // GET /api/apartments/user/:userId
 export const GET = async (req, { params }) => {
   try {

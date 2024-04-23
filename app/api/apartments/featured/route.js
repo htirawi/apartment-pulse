@@ -1,8 +1,7 @@
 import connectDB from '@/config/database';
 import Apartment from '@/models/Apartment';
 
-import { getUserSession } from '@/utils/getUserSession';
-import cloudinary from '@/config/cloudinary';
+export const dynamic = 'force-dynamic';
 
 // GET /api/apartments/featured
 export const GET = async (req) => {
