@@ -4,7 +4,9 @@ const apiDomain = process.env.NEXT_PUBLIC_API_DOMAIN || null;
 async function fetchApartments({ showFeatured = false } = {}) {
   try {
     // handle if domain is not available
-    if (!apiDomain) return [];
+    if (!apiDomain) {
+      return [];
+    }
     const response = await fetch(
       `${apiDomain}/apartments${showFeatured ? '/featured' : ''}`,
       {
