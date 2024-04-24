@@ -21,7 +21,7 @@ async function fetchApartment(id) {
   try {
     // handle if domain is not available
     if (!apiDomain) {
-      return [];
+      return null;
     }
     const response = await fetch(`${apiDomain}/apartments/${id}`);
 
