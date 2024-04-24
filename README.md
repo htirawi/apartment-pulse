@@ -2,7 +2,7 @@
 
 > A web application to help you find your apartment.
 
-This is the main project URL my [Apartment Pulse](https://apartment-pulse.vercel.app/)
+This is the main project URL deployed to Vercel [Apartment Pulse](https://apartment-pulse.vercel.app/)
 
 ## Features
 
