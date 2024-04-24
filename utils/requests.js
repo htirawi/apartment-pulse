@@ -18,17 +18,22 @@ async function fetchApartments({ showFeatured = false } = {}) {
 
 // Fetch a single apartment from the API
 async function fetchApartment(id) {
-  // handle if domain is not available
-  if (!apiDomain) {
-    return [];
-  }
-  const response = await fetch(`${apiDomain}/apartments/${id}`);
+  try {
+    // handle if domain is not available
+    if (!apiDomain) {
+      return [];
+    }
+    const response = await fetch(`${apiDomain}/apartments/${id}`);
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch apartment');
-  }
+    if (!response.ok) {
+      throw new Error('Failed to fetch apartment');
+    }
 
-  return response.json();
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 }
 
 export { fetchApartments, fetchApartment };
