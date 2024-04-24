@@ -12,12 +12,6 @@
     <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
 
-<p align="center"> 
-    <br />&#10023;
-    <a href="#Quick-Start">Quick Start</a>   &#10023;    
-    <a href="#Contact">Author</a>&#10023;
-  </p>
-
    <h3 align="center"><a href="https://apartment-pulse.vercel.app/"><strong>« Try the demo here »</strong></a></h3>
 
 > A web application to help you find your apartment.
