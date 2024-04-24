@@ -46,13 +46,10 @@ export const authOptions = {
       // 1. Get user from database
       const dbUser = await User.findOne({ email: session.user.email });
       // 2. If user exists, add user to session
-      if (dbUser) {
-        session.user.id = dbUser._id.toString();
-      }
+      session.user.id = dbUser._id.toString();
+
       // 3. return session
       return session;
     },
   },
 };
-
-export default NextAuth(authOptions);

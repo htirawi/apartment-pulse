@@ -46,11 +46,11 @@ export const GET = async () => {
 
 // POST /api/messages
 
-export const POST = async (req) => {
+export const POST = async (request) => {
   try {
     await connectDB();
     const { name, email, phone, message, apartment, recipient } =
-      await req.json();
+      await request.json();
 
     const userSession = await getUserSession();
 
@@ -73,13 +73,13 @@ export const POST = async (req) => {
     }
 
     const newMessage = new Message({
-      name,
       sender: user.id,
+      recipient,
+      apartment,
+      name,
       email,
       phone,
       body: message,
-      apartment,
-      recipient,
     });
 
     await newMessage.save();

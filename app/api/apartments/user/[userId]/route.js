@@ -1,4 +1,3 @@
-// GET /api/apartments
 import connectDB from '@/config/database';
 import Apartment from '@/models/Apartment';
 

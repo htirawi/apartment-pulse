@@ -7,12 +7,12 @@ import cloudinary from '@/config/cloudinary';
 export const dynamic = 'force-dynamic';
 
 // GET /api/apartments
-export const GET = async (req) => {
+export const GET = async (request) => {
   try {
     await connectDB();
 
-    const page = req.nextUrl.searchParams.get('page') || 1; // Default to page 1
-    const pageSize = req.nextUrl.searchParams.get('pageSize') || 5; // Default to 10 items per page
+    const page = request.nextUrl.searchParams.get('page') || 1; // Default to page 1
+    const pageSize = request.nextUrl.searchParams.get('pageSize') || 5; // Default to 10 items per page
 
     const skip = (page - 1) * pageSize;
     const totalApartments = await Apartment.countDocuments({});
@@ -36,7 +36,7 @@ export const GET = async (req) => {
 };
 
 // POST /api/apartments
-export const POST = async (req) => {
+export const POST = async (request) => {
   try {
     await connectDB();
 
@@ -47,9 +47,9 @@ export const POST = async (req) => {
     }
 
     const { userId } = userSession;
-    const formData = await req.formData();
+    const formData = await request.formData();
 
-    // Access all values from Aminiities and Images
+    // Access all values from Amenities and Images
 
     const amenities = formData.getAll('amenities');
     const images = formData
@@ -92,10 +92,12 @@ export const POST = async (req) => {
     for (const image of images) {
       const imageBuffer = await image.arrayBuffer();
       const imageArray = Array.from(new Uint8Array(imageBuffer));
-      const imageData = Buffer.from(imageArray).toString('base64');
+      const imageData = Buffer.from(imageArray);
+      // Convert the image data to base64
+      const imageBase64 = imageData.toString('base64');
 
       const imageUpload = await cloudinary.uploader.upload(
-        `data:image/png;base64,${imageData}`,
+        `data:image/png;base64,${imageBase64}`,
         {
           folder: 'apartmentpulse',
         }

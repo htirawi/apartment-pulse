@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 export const GET = async (req, res) => {
   try {
     await connectDB();
-    const sessionUser = await getUserSession(req);
+    const sessionUser = await getUserSession();
 
     if (!sessionUser || !sessionUser.userId) {
       return new Response('Unauthorized', { status: 401 });
@@ -17,8 +17,7 @@ export const GET = async (req, res) => {
     const { userId } = sessionUser;
 
     // Find the user
-    const user = await User.findById(userId);
-    // const user = await User.findOne({ _id: userId});
+    const user = await User.findOne({ _id: userId });
 
     if (!user) {
       return new Response('User not found', { status: 404 });
@@ -29,7 +28,6 @@ export const GET = async (req, res) => {
 
     return new Response(JSON.stringify(bookmarks), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error(error);
@@ -37,13 +35,13 @@ export const GET = async (req, res) => {
   }
 };
 
-export const POST = async (req, res) => {
+export const POST = async (request) => {
   try {
     await connectDB();
 
-    const { apartmentId } = await req.json();
+    const { apartmentId } = await request.json();
 
-    const sessionUser = await getUserSession(req);
+    const sessionUser = await getUserSession();
 
     if (!sessionUser || !sessionUser.userId) {
       return new Response('Unauthorized', { status: 401 });
@@ -52,8 +50,7 @@ export const POST = async (req, res) => {
     const { userId } = sessionUser;
 
     // Find the user
-    const user = await User.findById(userId);
-    // const user = await User.findOne({ _id: userId});
+    const user = await User.findOne({ _id: userId });
 
     if (!user) {
       return new Response('User not found', { status: 404 });
@@ -66,7 +63,7 @@ export const POST = async (req, res) => {
 
     if (isBookmarked) {
       // Remove bookmark
-      user.bookmarks.pop(apartmentId);
+      user.bookmarks.pull(apartmentId);
       message = 'Bookmark removed';
       isBookmarked = false;
     } else {
@@ -80,10 +77,9 @@ export const POST = async (req, res) => {
 
     return new Response(JSON.stringify({ message, isBookmarked }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: error.message });
+    return new Response('Something went wrong...', { status: 500 });
   }
 };

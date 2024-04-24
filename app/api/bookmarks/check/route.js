@@ -4,13 +4,13 @@ import { getUserSession } from '@/utils/getUserSession';
 
 export const dynamic = 'force-dynamic';
 
-export const POST = async (req, res) => {
+export const POST = async (request) => {
   try {
     await connectDB();
 
-    const { apartmentId } = await req.json();
+    const { apartmentId } = await request.json();
 
-    const sessionUser = await getUserSession(req);
+    const sessionUser = await getUserSession();
 
     if (!sessionUser || !sessionUser.userId) {
       return new Response('Unauthorized', { status: 401 });
@@ -19,7 +19,7 @@ export const POST = async (req, res) => {
     const { userId } = sessionUser;
 
     // Find the user
-    const user = await User.findById(userId);
+    const user = await User.findOne({ _id: userId });
     // const user = await User.findOne({ _id: userId});
 
     if (!user) {
@@ -31,10 +31,9 @@ export const POST = async (req, res) => {
 
     return new Response(JSON.stringify({ isBookmarked }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: error.message });
+    return new Response('Something went wrong...', { status: 500 });
   }
 };
