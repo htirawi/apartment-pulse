@@ -27,10 +27,8 @@ const ApartmentPage = () => {
       try {
         const data = await fetchApartment(id);
         setApartment(data);
-        setLoading(false);
       } catch (error) {
         console.error('Failed to fetch apartment', error);
-        setLoading(false);
       } finally {
         setLoading(false);
       }

@@ -27,8 +27,7 @@ export const DELETE = async (req, { params }) => {
   try {
     const apartmentId = params.id;
 
-    await connectDB();
-    const userSession = await getUserSession(req);
+    const userSession = await getUserSession();
 
     // Check if user is logged in
     if (!userSession || !userSession.userId) {
@@ -36,6 +35,8 @@ export const DELETE = async (req, { params }) => {
     }
 
     const { userId } = userSession;
+
+    await connectDB();
 
     const apartment = await Apartment.findById(apartmentId);
     if (!apartment) {
@@ -59,7 +60,7 @@ export const DELETE = async (req, { params }) => {
 };
 
 // PUT /api/apartments/:id
-export const PUT = async (req, { params }) => {
+export const PUT = async (request, { params }) => {
   try {
     await connectDB();
 
@@ -72,7 +73,7 @@ export const PUT = async (req, { params }) => {
     const { id } = params;
 
     const { userId } = userSession;
-    const formData = await req.formData();
+    const formData = await request.formData();
 
     // Access all values from Aminiities and Images
     const amenities = formData.getAll('amenities');
@@ -85,7 +86,7 @@ export const PUT = async (req, { params }) => {
     }
 
     // Verify User is the Owner of the Apartment
-    if (existingApartment.owner.toString() !== 12) {
+    if (existingApartment.owner.toString() !== userId) {
       return new Response('Unauthorized', { status: 401 });
     }
 
@@ -120,8 +121,7 @@ export const PUT = async (req, { params }) => {
     // Update Apartment in Database
     const updatedApartment = await Apartment.findByIdAndUpdate(
       id,
-      apartmentData,
-      { new: true }
+      apartmentData
     );
     return new Response(JSON.stringify(updatedApartment), { status: 200 });
   } catch (error) {

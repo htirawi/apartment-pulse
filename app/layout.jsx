@@ -10,7 +10,7 @@ import { GlobalProvider } from '@/context/GlobalContext';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata = {
-  title: 'Apartment Rental | Find the best apartment for rent in your city',
+  title: 'ApartmentRental | Find the best apartment for rent in your city',
   description: 'Find the best apartment for rent in your city',
   keywords: 'apartment, rental, rent, city, find, best',
 };
@@ -20,16 +20,11 @@ const MainLayout = ({ children }) => {
     <GlobalProvider>
       <AuthProvider>
         <html lang="en">
-          <head>
-            <link rel="shortcut icon" href="#" />
-          </head>
           <body>
-            <div id="app">
-              <Navbar />
-              <main>{children}</main>
-              <Footer />
-              <ToastContainer />
-            </div>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer />
           </body>
         </html>
       </AuthProvider>

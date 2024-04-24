@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 // GET /api/messages/unread-count
 
-export const GET = async (req) => {
+export const GET = async () => {
   try {
     await connectDB();
     const userSession = await getUserSession();

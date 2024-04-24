@@ -18,11 +18,9 @@ const SavedApartmentsPage = () => {
         }
         const data = await response.json();
         setSavedApartments(data);
-        setLoading(false);
       } catch (error) {
         console.error('Failed to fetch saved apartments', error);
         toast.error('Failed to fetch saved apartments');
-        setLoading(false);
       } finally {
         setLoading(false);
       }
