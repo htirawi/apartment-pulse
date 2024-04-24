@@ -9,7 +9,7 @@ async function fetchApartments({ showFeatured = false } = {}) {
     }
     const response = await fetch(
       `${apiDomain}/apartments${showFeatured ? '/featured' : ''}`,
-      { cache: 'no-store' }
+      { next: { revalidate: 0 } }
     );
     if (!response.ok) {
       throw new Error('Failed to fetch apartments');
