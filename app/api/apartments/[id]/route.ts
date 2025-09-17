@@ -1,6 +1,7 @@
 import connectDB from '@/config/database';
 import Apartment from '@/models/Apartment';
 import { getUserSession } from '@/utils/getUserSession';
+import { ApiResponseBuilder, handleApiError } from '@/utils/apiResponse';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,14 +12,20 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
 
     const apartment = await Apartment.findById(params.id);
     if (!apartment) {
-      return new Response('Apartment Not Found', { status: 404 });
+      return new Response(JSON.stringify({
+        success: false,
+        error: 'Apartment Not Found',
+        timestamp: new Date().toISOString()
+      }), { 
+        status: 404,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
-    return new Response(JSON.stringify(apartment), {
-      status: 200,
-    });
+    
+    return ApiResponseBuilder.success(apartment, 'Apartment fetched successfully');
   } catch (error) {
-    console.error(error);
-    return new Response('Internal Server Error', { status: 500 });
+    console.error('Error fetching apartment:', error);
+    return handleApiError(error);
   }
 };
 
