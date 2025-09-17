@@ -1,8 +1,8 @@
-import { fetchApartments } from '@/utils/requests';
+import { fetchApartmentsFromDB } from '@/utils/serverRequests';
 import AnimatedFeaturedApartments from './AnimatedFeaturedApartments';
 
 const FeaturedApartments = async () => {
-  const apartments = await fetchApartments({ showFeatured: true });
+  const apartments = await fetchApartmentsFromDB({ showFeatured: true });
   return <AnimatedFeaturedApartments apartments={apartments} />;
 };
 

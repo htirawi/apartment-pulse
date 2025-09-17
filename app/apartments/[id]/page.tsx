@@ -14,7 +14,7 @@ import ShareButtons from '@/components/ShareButtons';
 import Spinner from '@/components/Spinner';
 
 import { FaArrowLeft } from 'react-icons/fa';
-import ApartmentContactForm from '@/components/ApartmentContactForm';
+import FormikContactForm from '@/components/FormikContactForm';
 
 const ApartmentPage = () => {
   const { id } = useParams();
@@ -70,7 +70,7 @@ const ApartmentPage = () => {
                 <aside className="space-y-4">
                   <BookmarkButton apartment={apartment} />
                   <ShareButtons apartment={apartment} />
-                  <ApartmentContactForm apartment={apartment} />
+                  <FormikContactForm apartment={apartment} />
                 </aside>
               </div>
             </div>

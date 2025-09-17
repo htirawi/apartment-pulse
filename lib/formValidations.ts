@@ -1,7 +1,44 @@
 import * as Yup from 'yup';
 
+// Contact form validation schema
+const contactFormSchema = Yup.object().shape({
+  name: Yup
+    .string()
+    .required('Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
+  
+  email: Yup
+    .string()
+    .required('Email is required')
+    .email('Please enter a valid email address'),
+  
+  phone: Yup
+    .string()
+    .matches(
+      /^[\+]?[1-9][\d]{0,15}$/,
+      'Please enter a valid phone number'
+    )
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must be less than 15 digits'),
+  
+  message: Yup
+    .string()
+    .required('Message is required')
+    .min(10, 'Message must be at least 10 characters')
+    .max(500, 'Message must be less than 500 characters'),
+});
+
+// Initial values for contact form
+const initialContactValues = {
+  name: '',
+  email: '',
+  phone: '',
+  message: '',
+};
+
 // Professional Yup validation schema for apartment form
-export const apartmentFormSchema = Yup.object().shape({
+const apartmentFormSchema = Yup.object().shape({
   type: Yup.string()
     .oneOf(['Apartment', 'Condo', 'House', 'Studio', 'Other'], 'Please select a valid apartment type')
     .required('Apartment type is required'),
@@ -100,7 +137,7 @@ export const apartmentFormSchema = Yup.object().shape({
 });
 
 // Initial form values
-export const initialApartmentValues = {
+const initialApartmentValues = {
   type: '',
   name: '',
   description: '',
@@ -125,3 +162,5 @@ export const initialApartmentValues = {
     phone: '',
   },
 };
+
+export { apartmentFormSchema, initialApartmentValues, contactFormSchema, initialContactValues };
