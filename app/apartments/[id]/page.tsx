@@ -23,20 +23,34 @@ const ApartmentPage = () => {
 
   useEffect(() => {
     const getApartment = async () => {
-      if (!id || Array.isArray(id)) return;
+      if (!id || Array.isArray(id)) {
+        setLoading(false);
+        return;
+      }
+      
       try {
+        console.log('Fetching apartment with ID:', id);
         const data = await fetchApartment(id);
-        setApartment(data);
+        
+        if (data) {
+          setApartment(data);
+          console.log('Apartment loaded successfully:', data.name);
+        } else {
+          console.error('No apartment data returned');
+          setApartment(null);
+        }
       } catch (error) {
-        console.error('Failed to fetch apartment', error);
+        console.error('Failed to fetch apartment:', error);
+        setApartment(null);
       } finally {
         setLoading(false);
       }
     };
-    if (apartment === null) {
+    
+    if (apartment === null && loading) {
       getApartment();
     }
-  }, [id, apartment]);
+  }, [id, apartment, loading]);
 
   if (!apartment && !loading) {
     return (
